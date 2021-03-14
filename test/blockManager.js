@@ -5,7 +5,7 @@ Object.assign(global, {
     config: {
         general: { network: 'stagenet' },
     },
-    database: mockdb.MockDb.new(),
+    // database: mockdb.MockDb.new(),
 });
 
 let _blockManager = require('../lib/blockManager');
