@@ -24,7 +24,7 @@
     "cors": "^2.8.1",
     "crypto": "0.0.3",
     "cryptoforknote-util": "git+https://github.com/MoneroOcean/node-cryptoforknote-util.git#v9.0.18",
-    "cryptonight-hashing": "git+https://github.com/tari-project/node-cryptonight-hashing.git#platform-support",
+    "cryptonight-hashing": "git+https://github.com/MoneroOcean/node-cryptonight-hashing.git#a3281227e85786e68d57d12eaff73f264f999b0d",
     "debug": "2.6.9",
     "express": "4.14.0",
     "express-rate-limit": "5.2.3",
