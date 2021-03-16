@@ -3,11 +3,12 @@
 let range = require('range');
 const argv = require('minimist')(process.argv.slice(2));
 
-if (!argv.user) {
+if (!argv.user && !argv.all) {
     console.error('Please specify user address to dump');
     process.exit(1);
 }
 const user = argv.user;
+const dump_all = !!argv.all;
 
 let paymentid;
 if (argv.paymentid) paymentid = argv.paymentid;
@@ -39,12 +40,11 @@ require('../init_mini.js').init(function () {
                     // jshint ignore:line
                     let shareData = global.protos.Share.decode(data);
                     if (
-                        shareData.paymentAddress === user &&
+                        (dump_all || shareData.paymentAddress === user) &&
                         (!paymentid || shareData.paymentID === paymentid) &&
                         (!worker || shareData.identifier === worker)
                     ) {
-                        var d = new Date(shareData.timestamp);
-                        console.log(d.toString() + ': ' + JSON.stringify(shareData));
+                        console.log(JSON.stringify(shareData));
                     }
                 });
             }
