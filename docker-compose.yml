@@ -47,15 +47,14 @@ services:
       - monero
     volumes:
       - monero-wallet:/home/monero/wallet
-    depends_on:
-      - monero-init
     ports:
       - 18082:18082
     entrypoint: "/monero/monero-wallet-rpc"
     command:
       - "--non-interactive"
       - "--daemon-address=monerod:18081"
-      - "--wallet-file /home/monero/wallet/1"
+      - "--wallet-file"
+      - "/home/monero/wallet/1"
       - "--password=''"
       - "--disable-rpc-login"
       - "--rpc-bind-ip=0.0.0.0"

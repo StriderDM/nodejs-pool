@@ -24,6 +24,9 @@ CREATE TABLE `pending_payouts`
     FOREIGN KEY (`balance_id`) REFERENCES balance(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+ALTER TABLE `payments`
+    ADD COLUMN `coin` VARCHAR(32) NOT NULL DEFAULT 'xmr';
+
 ALTER TABLE `balance`
     ADD COLUMN `locked` SMALLINT(1) NOT NULL DEFAULT 0,
     CHANGE COLUMN `payment_address` `payment_address` VARCHAR(256),

@@ -105,6 +105,11 @@ The pool is designed to have a dual-wallet design, one which is a fee wallet, on
 5. Start the wallet using PM2: `pm2 start /usr/local/src/monero/build/release/bin/monero-wallet-rpc -- --rpc-bind-port 18082 --password-file ~/wallet_pass --wallet-file <Your wallet name here> --disable-rpc-login --trusted-daemon`
 6. If you don't use PM2, then throw the wallet into a screen and have fun.
 
+Setup Tari Merge Mining
+------------------------
+
+See [TARI_SETUP.md](TARI_SETUP.md)
+
 Manual Setup
 ------------
 Pretty similar to the above, you may wish to dig through a few other things for sanity sake, but the installer scripts should give you a good idea of what to expect from the ground up.

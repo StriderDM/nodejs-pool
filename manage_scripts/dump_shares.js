@@ -44,7 +44,7 @@ require('../init_mini.js').init(function () {
                         (!paymentid || shareData.paymentID === paymentid) &&
                         (!worker || shareData.identifier === worker)
                     ) {
-                        console.log(JSON.stringify(shareData));
+                        console.log(JSON.stringify(shareData, null, 2));
                     }
                 });
             }

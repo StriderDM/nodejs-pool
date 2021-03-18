@@ -12,7 +12,6 @@ enum MESSAGETYPE {
     BLOCK = 1;
     INVALIDSHARE = 2;
     ALTBLOCK = 3;
-    INSERTALTBLOCK = 4;
 }
 
 message WSData {
