@@ -39,7 +39,7 @@ To set up this fork you'll need the following additional components:
 
 **Deployment Steps**
 
-These steps provide a high-level deployment guide using the defaults as much as possible. It assumes that `screen`, `docker` and `docker-compose` are installed although they are not required at all.
+These steps provide a high-level deployment guide using the defaults as much as possible. It assumes that `docker` and `docker-compose` are installed although they are not required at all.
 You will almost certainly need to tweak these steps to fit your specific requirements.
 
 Is it assumed that you have already set up nodejs (tested on v10.24.0), the monero daemon and the RPC wallet as detailed in the [README](README.md).
@@ -47,7 +47,7 @@ Is it assumed that you have already set up nodejs (tested on v10.24.0), the mone
 1. Tor
 
 ```shell
-screen -dmS tor bash -c 'tor --clientonly 1 --socksport 9050 --controlport 127.0.0.1:9051 --log "notice stdout" --clientuseipv6 1 --SafeLogging 0 --DataDirectory $HOME/.tor/data'
+tor --clientonly 1 --socksport 9050 --controlport 127.0.0.1:9051 --log "notice stdout" --clientuseipv6 1 --SafeLogging 0 --DataDirectory $HOME/.tor/data
 ```
 
 2. Tari components
@@ -58,13 +58,15 @@ Assumes the tari binaries are in your `PATH`.
 # Create a new node identity if necessary
 tari_base_node --create-id
 # Start the node
-screen -dmS basenode bash -c 'tari_base_node'
+tari_base_node
 
-# Start the console wallet 
-screen -dmS wallet bash -c 'tari_console_wallet --password "PASSWORD HERE"'
+# Start the console wallet and follow the setup steps
+tari_console_wallet 
+# once setup, you can use `--password` to start the wallet up immediately
+tari_console_wallet --password "PASSWORD HERE"
 
 # Start the merge mining proxy
-screen -dmS proxy bash -c 'tari_merge_mining_proxy'
+tari_merge_mining_proxy
 ```
 
 3. Setup the pool MySQL database
@@ -76,6 +78,16 @@ Database scripts are available in `./deployment/docker/backend/db_scripts`. Run 
 **Pool Configuration**
 
 ```shell
+# The public address where your pool will be hosted
+export POOL_HOSTNAME=xmrpool.net
+# Where should the LMDB database live?
+export LMDB_STORAGE_PATH=/var/pool-db
+# Credentials of the MySQL db
+export DB_HOST=localhost
+export DB_NAME=pool
+export DB_USER=app_user
+export DB_PASS=super-secret-password
+
 cat > config.json <<-EOF
 {
   "pool_id": 0,
@@ -94,7 +106,7 @@ cat > config.json <<-EOF
 EOF
 ```
 
-Look in the `config` table and change the configuration as necessary.
+Look in the `config` table and change the configuration as necessary. See the [nodejs-pool README](README.md) for more details.
 
 **Starting the pool**
 
@@ -108,4 +120,15 @@ npm install --production
 pm2 start ./deployment/docker/backend/stack.yml
 ```
 
+4. Pool UI
 
+```shell
+git clone --branch tari https://github.com/tari-project/poolui.git
+cd poolui
+npm install
+npx gulp build
+cd build
+# You should use a production-ready static HTTP server
+python -m SimpleHTTPServer 8080
+# open http://localhost:8080
+```
