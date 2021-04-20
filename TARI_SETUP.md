@@ -18,7 +18,7 @@ To set up this fork you'll need the following additional components:
    ```shell
    cargo build --release --bin tari_console_wallet
    # You may copy this binary to somewhere more suitable
-   ./target/release/tari_console_wallet 
+   ./target/release/tari_console_wallet
    ```
 
    The Merge mining proxy as well as the xtr payments process communicate with the wallet via the gRPC interface. The default address us 127.0.0.1:18143 however this can be changed in `~/.tari/config/config.toml`.
@@ -34,7 +34,7 @@ To set up this fork you'll need the following additional components:
    ```shell
    cargo build --release --bin tari_merge_mining_proxy
    # You may copy this binary to somewhere more suitable
-   ./target/release/tari_merge_mining_proxy 
+   ./target/release/tari_merge_mining_proxy
     ```
 
 **Deployment Steps**
@@ -61,7 +61,7 @@ tari_base_node --create-id
 tari_base_node
 
 # Start the console wallet and follow the setup steps
-tari_console_wallet 
+tari_console_wallet
 # once setup, you can use `--password` to start the wallet up immediately
 tari_console_wallet --password "PASSWORD HERE"
 
@@ -82,7 +82,7 @@ docker-compose up monerod
 
 Database scripts are available in `./deployment/docker/backend/db_scripts`. Run `base.sql` and then the tari changes in `tari.sql`.
 
-4. Pool 
+4. Pool
 
 ** Configuration **
 
@@ -116,6 +116,28 @@ EOF
 ```
 
 Look in the `config` table and change the configuration as necessary. See the [nodejs-pool README](README.md) for more details.
+
+You must set the following variables in the `config` table (example defaults are included):
+```
+daemon.address = 127.0.0.1
+daemon.port = 7878
+daemon.enableAlgoSwitching = false
+wallet.address = 127.0.0.1
+wallet.port = 38081
+pool.address = TARI_ADDRESS:MONERO_ADDRESS
+payout.feeAddress = TARI_ADDRESS:MONERO_ADDRESS
+general.shareHost = http://127.0.0.1/leafApi
+wallet.grpcAddress = 127.0.0.1
+wallet.grpcPort = 18143
+general.network = stagenet
+```
+
+Additionally the following must also be set in the `config` table if not using the deploy script (see additional_setup_without_installer.sql)
+```
+api.authKey
+api.secKey
+```
+
 
 **Running the pool**
 

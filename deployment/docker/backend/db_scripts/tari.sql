@@ -1,3 +1,4 @@
+USE pool;
 INSERT INTO pool.config (module, item, item_value, item_type, Item_desc)
 VALUES ('wallet', 'grpcAddress', '127.0.0.1', 'string', 'IP address of the Wallet GRPC endpoint'),
        ('wallet', 'grpcPort', '18181', 'int', 'Port of the Wallet GRPC endpoint'),
@@ -38,4 +39,3 @@ ALTER TABLE `block_balance`
 
 ALTER TABLE `block_balance`
     ADD KEY `block_balance_coin_index` (`coin`);
-
